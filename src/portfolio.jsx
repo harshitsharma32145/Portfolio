@@ -5,7 +5,7 @@ import {
   useInView, useScroll, useTransform,
   animate as fmAnimate
 } from "framer-motion";
-import { FaGithub, FaLinkedin, FaExternalLinkAlt, FaEnvelope, FaDownload, FaArrowRight, FaServer, FaCode, FaCloud, FaTools } from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaExternalLinkAlt, FaEnvelope, FaDownload, FaArrowRight, FaServer, FaCode, FaCloud, FaTools, FaBrain } from "react-icons/fa";
 
 /* ─────────────────────────────  DATA  ───────────────────────────── */
 
@@ -13,6 +13,7 @@ const SKILLS = [
   { category: "Frontend", icon: <FaCode />, color: "#3b82f6", skills: ["Angular", "TypeScript", "React", "HTML5/CSS3", "Tailwind CSS", "RxJS"] },
   { category: "Backend", icon: <FaServer />, color: "#8b5cf6", skills: [".NET Core", "C#", "RESTful APIs", "SQL Server", "Entity Framework", "Node.js"] },
   { category: "Cloud & DevOps", icon: <FaCloud />, color: "#0ea5e9", skills: ["AWS (S3, SES, SNS, EC2)", "Docker", "CI/CD Pipelines", "GitActions", "IIS Hosting"] },
+  { category: "AI & Machine Learning", icon: <FaBrain />, color: "#ec4899", skills: ["Python", "Claude Code", "Antigravity", "Cursor"] },
   { category: "Tools & Methodologies", icon: <FaTools />, color: "#10b981", skills: ["Agile/Scrum", "JIRA", "BRD/FRD Creation", "Git", "Postman", "Figma"] }
 ];
 
