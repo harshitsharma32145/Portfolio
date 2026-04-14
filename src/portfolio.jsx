@@ -156,9 +156,9 @@ function Hero() {
           <span className="pulse-dot" /> Open to impactful opportunities
         </motion.div>
 
-        <motion.h1 variants={fadeUp} initial="hidden" animate="visible" transition={{ delay: 0.1 }}>
-          <span style={{ display: "block", fontSize: "0.55em", fontWeight: 500, color: "var(--text-muted)", marginBottom: "12px", letterSpacing: "1px" }}>Hi, I'm Harshit Sharma.</span>
-          Architecting Scalable Cloud Solutions & <br/><span className="text-gradient">Driving Business Impact.</span>
+        <motion.h1 variants={fadeUp} initial="hidden" animate="visible" transition={{ delay: 0.1 }} className="hero-h1">
+          <span style={{ display: "block", fontSize: "0.4em", fontWeight: 500, color: "var(--text-muted)", marginBottom: "12px", letterSpacing: "2px", textTransform: "uppercase" }}>Hi, I'm Harshit Sharma.</span>
+          <span className="text-outline">ARCHITECTING</span> SCALABLE <br/> CLOUD SOLUTIONS & <br/><span className="text-gradient">DRIVING IMPACT.</span>
         </motion.h1>
 
         <motion.h2 variants={fadeUp} initial="hidden" animate="visible" transition={{ delay: 0.2 }} className="hero-sub">
@@ -403,7 +403,7 @@ function Contact() {
   );
 }
 
-/* ──────────────────────────  GLOBAL CSS  ─────────────────────────── */
+/* GLOBAL CSS */
 
 const CSS = `
 :root {
@@ -429,6 +429,42 @@ body {
   font-family: 'Inter', sans-serif; 
   -webkit-font-smoothing: antialiased; 
   line-height: 1.6;
+}
+
+/* NOISE GRAIN OVERLAY */
+.noise-overlay {
+  position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+  pointer-events: none; z-index: 9999; opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* PRELOADER */
+.preloader {
+  position: fixed; inset: 0; background: var(--bg-main);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 10000; flex-direction: column;
+}
+.preloader-text {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(24px, 4vw, 40px);
+  font-weight: 800; letter-spacing: 6px;
+  color: var(--text-main);
+  display: flex; align-items: center; gap: 8px;
+}
+.blink { animation: blink 1s step-end infinite; }
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+/* HOLLOW TEXT EFFECT */
+.text-outline {
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.4);
+}
+.hero-h1 {
+  font-size: clamp(40px, 6.5vw, 76px); 
+  font-weight: 800; 
+  line-height: 1.1; 
+  letter-spacing: -2px; 
+  margin-bottom: 24px;
 }
 
 h1, h2, h3, h4, h5, .font-heading { font-family: 'Plus Jakarta Sans', sans-serif; }
@@ -578,21 +614,48 @@ h1, h2, h3, h4, h5, .font-heading { font-family: 'Plus Jakarta Sans', sans-serif
 /* ──────────────────────────  APP  ───────────────────────────────── */
 
 export default function Portfolio() {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Cinematic preloader delay
+    const timer = setTimeout(() => setLoading(false), 2400);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <>
       <style>{CSS}</style>
-      <div className="app-container" style={{ position: "relative", zIndex: 1, overflowX: "hidden" }}>
-        <CursorGlow />
-        <Navbar />
-        <main>
-          <Hero />
-          <About />
-          <Experience />
-          <Skills />
-          <Projects />
-        </main>
-        <Contact />
-      </div>
+      <div className="noise-overlay" />
+      
+      <AnimatePresence mode="wait">
+        {loading ? (
+          <motion.div key="loader" className="preloader"
+            exit={{ y: "-100vh", opacity: 0, transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] } }}
+          >
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.8 }}
+              className="preloader-text"
+            >
+              HARSHIT SHARMA <span className="blink">_</span>
+            </motion.div>
+          </motion.div>
+        ) : (
+          <motion.div key="content" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8, delay: 0.2 }} className="app-container" style={{ position: "relative", zIndex: 1, overflowX: "hidden" }}>
+            <CursorGlow />
+            <Navbar />
+            <main>
+              <Hero />
+              <About />
+              <Experience />
+              <Skills />
+              <Projects />
+            </main>
+            <Contact />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }
