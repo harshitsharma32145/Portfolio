@@ -157,6 +157,7 @@ function Hero() {
         </motion.div>
 
         <motion.h1 variants={fadeUp} initial="hidden" animate="visible" transition={{ delay: 0.1 }}>
+          <span style={{ display: "block", fontSize: "0.55em", fontWeight: 500, color: "var(--text-muted)", marginBottom: "12px", letterSpacing: "1px" }}>Hi, I'm Harshit Sharma.</span>
           Architecting Scalable Cloud Solutions & <br/><span className="text-gradient">Driving Business Impact.</span>
         </motion.h1>
 
